@@ -6,6 +6,7 @@ import { PARTNERS } from "../shared/partners";
 import { PROMOTIONS } from "../shared/promotions";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
+import About from "./AboutComponent";
 import CampsiteInfo from "./CampsiteInfoComponent";
 import Contact from "./ContactComponent";
 import Home from "./HomeComponent";
@@ -50,6 +51,9 @@ class Main extends Component {
           />
           <Route exact path="/contactus" component={Contact} />
           <Route path="/directory/:campsiteId" component={CampsiteWithId} />
+          <Route exact path="/aboutus" render={() =>
+            <About partners={this.state.partners} />}
+          />
 
           <Redirect to="./home" />
 
