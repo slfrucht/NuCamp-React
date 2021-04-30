@@ -204,7 +204,7 @@ class Contact extends Component {
                                 <Col md={10}>
                                     <Control.textarea model=".feedback" id="feedback" name="feedback"
                                         rows="12"
-                                        
+                                        className="form-control"
                                         />
                                 </Col>
                             </Row>
