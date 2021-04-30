@@ -5,6 +5,7 @@ import {
 } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
+import { Loading } from "./LoadingComponent";
 
 const maxLength = len => val => !val || (val.length <= len);
 const minLength = len => val => val && (val.length >= len);
@@ -145,6 +146,26 @@ class CommentForm extends Component {
 
 
 function CampsiteInfo(props) {
+    if(props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    if(props.errorMessage) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        {props.errorMessage}
+                    </div>
+                </div>
+            </div>
+        );
+    }
     if (props.campsite) {
         return (
             <div className="container">
