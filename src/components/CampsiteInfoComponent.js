@@ -6,6 +6,8 @@ import {
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
+
 
 const maxLength = len => val => !val || (val.length <= len);
 const minLength = len => val => val && (val.length >= len);
@@ -13,12 +15,19 @@ const minLength = len => val => val && (val.length >= len);
 function RenderCampsite({ campsite }) {
     return (
         <div className="col-md-5 m-1">
-            <Card>
-                <CardImg top src={campsite.image} alt={campsite.name}></CardImg>
-                <CardBody>
-                    <CardText>{campsite.description}</CardText>
-                </CardBody>
-            </Card>
+            <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: "scale(0.5) translateY(50%)"
+                }}
+            >
+                <Card>
+                    <CardImg top src={campsite.image} alt={campsite.name}></CardImg>
+                    <CardBody>
+                        <CardText>{campsite.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
         </div>
     )
 }
@@ -28,21 +37,26 @@ function RenderComments({ comments, addComment, campsiteId }) {
         return (
             <div className="col-md-5 m-1">
                 <h4>Comments</h4>
-                {
-                    comments.map(comment => {
-                        return (
-                            <div key={comment.id}>
-                                <p>
-                                    {comment.text} <br />
+                <Stagger in>
+                    {
+                        comments.map(comment => {
+                            return (
+                                <Fade in key={comment.id}>
+                                    <div>
+                                        <p>
+                                            {comment.text} <br />
 
                                 -- {comment.author}
                     , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
-                                </p>
-                            </div>
-                        );
-                    })
-                }
-                <CommentForm addComment={addComment} campsiteId={campsiteId}/>
+                                        </p>
+                                    </div>
+                                </Fade>
+                            );
+                        })
+                    }
+                </Stagger>
+
+                <CommentForm addComment={addComment} campsiteId={campsiteId} />
             </div>
         );
     }
@@ -146,7 +160,7 @@ class CommentForm extends Component {
 
 
 function CampsiteInfo(props) {
-    if(props.isLoading) {
+    if (props.isLoading) {
         return (
             <div className="container">
                 <div className="row">
@@ -155,7 +169,7 @@ function CampsiteInfo(props) {
             </div>
         );
     }
-    if(props.errorMessage) {
+    if (props.errorMessage) {
         return (
             <div className="container">
                 <div className="row">
@@ -182,10 +196,10 @@ function CampsiteInfo(props) {
 
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments 
-                    comments={props.comments} 
-                    addComment={props.addComment}
-                    campsiteId={props.campsite.id}
+                    <RenderComments
+                        comments={props.comments}
+                        addComment={props.addComment}
+                        campsiteId={props.campsite.id}
                     />
                 </div>
             </div>
