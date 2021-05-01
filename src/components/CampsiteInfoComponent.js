@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import {
     Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody, Label,
-    Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle
+    Card, CardImg, CardText, CardBody
 } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
 import { FadeTransform, Fade, Stagger } from "react-animation-components";
+import {baseUrl} from "../shared/baseUrl";
 
 
 const maxLength = len => val => !val || (val.length <= len);
@@ -22,7 +23,7 @@ function RenderCampsite({ campsite }) {
                 }}
             >
                 <Card>
-                    <CardImg top src={campsite.image} alt={campsite.name}></CardImg>
+                    <CardImg top src={baseUrl + campsite.image} alt={campsite.name}></CardImg>
                     <CardBody>
                         <CardText>{campsite.description}</CardText>
                     </CardBody>
